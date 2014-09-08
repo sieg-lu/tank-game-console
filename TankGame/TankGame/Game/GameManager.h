@@ -3,28 +3,32 @@
 
 #include "../Base/Global.h"
 #include "../Base/Object.h"
+#include "Player.h"
 
 class GameManager {
 private:
-	static GameManager *mInstance;
-	GameManager();
-	~GameManager();
+    static GameManager *mInstance;
+    GameManager();
+    ~GameManager();
 
 public:
-	static GameManager *GetInstance();
-	void DestroyInstance();
+    static GameManager *GetInstance();
+    void DestroyInstance();
 
 private:
-	int mHeight;
-	int mWidth;
-	vector<string> mBuffer;
-	vector<Object*> mObjects;
+    int mHeight;
+    int mWidth;
+    vector<string> mBuffer;
+    vector<Object*> mObjects;
 
-	bool ProcessKey(int key);
+    Player *mPlayer;
+
+    bool ProcessKey(int key);
 
 public:
-	bool Initialize(string filename);
-	bool StartGame();
+    bool Initialize(string filename);
+    bool StartGame();
+    bool Destroy();
 
 };
 

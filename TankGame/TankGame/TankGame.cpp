@@ -7,11 +7,13 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	GameManager::GetInstance()->Initialize("level1.txt");
-	GameManager::GetInstance()->StartGame();
+    if (GameManager::GetInstance()->Initialize("level1.txt")) {
+        GameManager::GetInstance()->StartGame();
+        GameManager::GetInstance()->Destroy();
+    }
 
-	system("pause");
+//    system("pause");
 
-	return 0;
+    return 0;
 }
 

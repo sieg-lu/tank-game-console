@@ -9,4 +9,14 @@ using namespace std;
 
 #include "Object.h"
 
+typedef unsigned int uint;
+
+enum eDirection {
+    eUp = 0,
+    eLeft,
+    eDown,
+    eRight,
+};
+extern const int gTankArea[4][4][3];
+
 #endif ///> end of __GLOBAL_H__

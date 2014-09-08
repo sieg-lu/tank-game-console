@@ -3,10 +3,10 @@
 
 class Object {
 public:
-	virtual bool Initialize(void *arg) = 0;
-	virtual bool Update() = 0;
-	virtual bool Render(void *arg) = 0;
-	virtual bool Destroy() = 0;
+    virtual bool Initialize(void *arg) = 0;
+    virtual bool Update() = 0;
+    virtual bool Render(void *arg) = 0;
+    virtual bool Destroy() = 0;
 
 };
 

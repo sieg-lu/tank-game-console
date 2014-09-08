@@ -4,36 +4,36 @@
 
 bool Terrain::Initialize(void *arg)
 {
-	mTerrainInfo = *(vector<string>*)(arg);
+    mTerrainInfo = *(vector<string>*)(arg);
 
-// 	for (int i = 0; i < mTerrainInfo.size(); i++) {
-// 		for (int j = 0; j < mTerrainInfo[i].size(); j++) {
-// 			cout << (char)mTerrainInfo[i][j];
-// 		}
-// 		cout << endl;
-// 	}
+//     for (int i = 0; i < mTerrainInfo.size(); i++) {
+//         for (int j = 0; j < mTerrainInfo[i].size(); j++) {
+//             cout << (char)mTerrainInfo[i][j];
+//         }
+//         cout << endl;
+//     }
 
-	return true;
+    return true;
 }
 
 bool Terrain::Update()
 {
-	return true;
+    return true;
 }
 
 bool Terrain::Render(void *arg)
 {
-	vector<string>* buffer = (vector<string>*)arg;
-	for (int i = 0; i < mTerrainInfo.size(); i++) {
-		for (int j = 0; j < mTerrainInfo[i].size(); j++) {
-			(*buffer)[i][j] = mTerrainInfo[i][j];
-		}
-	}
+    vector<string>* buffer = (vector<string>*)arg;
+    for (uint i = 0; i < mTerrainInfo.size(); i++) {
+        for (uint j = 0; j < mTerrainInfo[i].size(); j++) {
+            (*buffer)[i][j] = mTerrainInfo[i][j];
+        }
+    }
 
-	return true;
+    return true;
 }
 
 bool Terrain::Destroy()
 {
-	return true;
+    return true;
 }
