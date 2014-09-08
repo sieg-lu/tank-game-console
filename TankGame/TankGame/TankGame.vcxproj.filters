@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Base\ConsoleAPI.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TankGame.cpp" />
+    <ClCompile Include="Base\ConsoleAPI.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Base">
+      <UniqueIdentifier>{5aa7c4f1-3a5d-4d0d-88d2-29126006ef76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{c45d409e-4e46-4812-9cc0-aedb4faa2cdf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
