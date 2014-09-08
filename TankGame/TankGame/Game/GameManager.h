@@ -1,8 +1,8 @@
 #ifndef __GAME_MANAGER_H__
 #define __GAME_MANAGER_H__
 
-#include "Global.h"
-#include "Object.h"
+#include "../Base/Global.h"
+#include "../Base/Object.h"
 
 class GameManager {
 private:
@@ -17,11 +17,14 @@ public:
 private:
 	int mHeight;
 	int mWidth;
-	vector<vector<int> > mBuffer;
+	vector<string> mBuffer;
 	vector<Object*> mObjects;
+
+	bool ProcessKey(int key);
 
 public:
 	bool Initialize(string filename);
+	bool StartGame();
 
 };
 

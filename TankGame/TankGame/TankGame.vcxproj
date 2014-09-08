@@ -52,13 +52,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\pthread\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\curses\include;$(SolutionDir)\pthread\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\pthread\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\curses\lib;$(SolutionDir)\pthread\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pthreadVC2.lib;pdcurses.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,24 +80,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Base\ConsoleAPI.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="Global.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="Base\Global.h" />
+    <ClInclude Include="Base\Object.h" />
+    <ClInclude Include="Game\GameManager.h" />
+    <ClInclude Include="Game\Terrain.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base\ConsoleAPI.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="Global.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Base\Global.cpp" />
+    <ClCompile Include="Base\Object.cpp" />
+    <ClCompile Include="Game\GameManager.cpp" />
+    <ClCompile Include="Game\Terrain.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TankGame.cpp" />
-    <ClCompile Include="Terrain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,16 +6,16 @@
     <ClInclude Include="Base\ConsoleAPI.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
+    <ClInclude Include="Base\Global.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="Global.h">
+    <ClInclude Include="Base\Object.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
+    <ClInclude Include="Game\GameManager.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Terrain.h">
+    <ClInclude Include="Game\Terrain.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -25,16 +25,16 @@
     <ClCompile Include="Base\ConsoleAPI.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="Base\Global.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Global.cpp">
+    <ClCompile Include="Base\Object.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
+    <ClCompile Include="Game\Terrain.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Terrain.cpp">
+    <ClCompile Include="Game\GameManager.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
