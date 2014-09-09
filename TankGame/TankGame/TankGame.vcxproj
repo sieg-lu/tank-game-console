@@ -82,6 +82,7 @@
     <ClInclude Include="Base\ConsoleAPI.h" />
     <ClInclude Include="Base\Global.h" />
     <ClInclude Include="Base\Object.h" />
+    <ClInclude Include="Base\Utility.h" />
     <ClInclude Include="Game\Bullet.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\GameManager.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="Base\ConsoleAPI.cpp" />
     <ClCompile Include="Base\Global.cpp" />
     <ClCompile Include="Base\Object.cpp" />
+    <ClCompile Include="Base\Utility.cpp" />
     <ClCompile Include="Game\Bullet.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\GameManager.cpp" />

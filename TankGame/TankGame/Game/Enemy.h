@@ -6,7 +6,16 @@
 
 class Enemy : public Tank {
 public:
-    void ai(const Tank &player);
+    virtual bool Initialize(void *arg);
+    virtual bool Render(void *arg);
+    void ai(int round, Tank *player, list<Bullet*> &bulletsList, vector<string> &buffer);
+
+    virtual string Name() { return string("Enemy"); }
+    virtual eObjectType ThisType() { return eEnemy; }
+
+private:
+    eDirection mHoldDirection;
+
 };
 
 #endif ///> end of __ENEMY_H__

@@ -4,12 +4,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 #include <assert.h>
+#include <windows.h>
 using namespace std;
 
+#include "Utility.h"
 #include "Object.h"
-
-typedef unsigned int uint;
 
 enum eDirection {
     eUp = 0,

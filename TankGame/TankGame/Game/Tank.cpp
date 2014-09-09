@@ -13,24 +13,27 @@ bool Tank::Initialize(void *arg)
     return true;
 }
 
-bool Tank::Update()
-{
-    return true;
-}
-
-bool Tank::Render(void *arg)
+bool Tank::Update(void *arg)
 {
     if (mIsDead) {
         return false;
     }
-    vector<string>* buffer = (vector<string>*)arg;
-    (*buffer)[mPosX][mPosY] = 'X';
-    for (int i = 1; i < 4; i++) {
-        (*buffer)[mPosX + gTankArea[mDirection][i][0]][mPosY + gTankArea[mDirection][i][1]] = gTankArea[mDirection][i][2];
-    }
-
     return true;
 }
+
+// bool Tank::Render(void *arg)
+// {
+//     if (mIsDead) {
+//         return false;
+//     }
+//     vector<string>* buffer = (vector<string>*)arg;
+//     (*buffer)[mPosX][mPosY] = 'X';
+//     for (int i = 1; i < 4; i++) {
+//         (*buffer)[mPosX + gTankArea[mDirection][i][0]][mPosY + gTankArea[mDirection][i][1]] = gTankArea[mDirection][i][2];
+//     }
+// 
+//     return true;
+// }
 
 bool Tank::Destroy()
 {
@@ -96,5 +99,43 @@ bool Tank::Move(eDirection dir, vector<string> &buffer)
     }
 
     return true;
+}
+
+bool Tank::Shoot(list<Bullet*> &bulletsList, const vector<string> &buffer)
+{
+    int tmpX = mPosX;
+    int tmpY = mPosY;
+    switch (mDirection)
+    {
+        case eUp:
+        {
+            tmpX--;
+        } break;
+        case eLeft:
+        {
+            tmpY--;
+        } break;
+        case eDown:
+        {
+            tmpX++;
+        } break;
+        case eRight:
+        {
+            tmpY++;
+        } break;
+    }
+    if (tmpX >= 0 && tmpX < buffer.size() &&
+        tmpY >= 0 && tmpY < buffer[0].length()) {
+        Bullet *bullet = new Bullet();
+        uint arg1 = MixInt(tmpX, tmpY);
+        bullet->SetDirection(mDirection);
+        if (bullet->Initialize(&arg1)) {
+            bulletsList.push_back(bullet);
+        } else {
+            delete bullet;
+        }
+        return true;
+    }
+    return false;
 }
 

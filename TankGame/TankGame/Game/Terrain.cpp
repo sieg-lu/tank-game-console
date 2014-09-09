@@ -16,7 +16,7 @@ bool Terrain::Initialize(void *arg)
     return true;
 }
 
-bool Terrain::Update()
+bool Terrain::Update(void *arg)
 {
     return true;
 }

@@ -30,6 +30,9 @@
     <ClInclude Include="Game\Bullet.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Base\Utility.h">
+      <Filter>Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -60,6 +63,9 @@
     </ClCompile>
     <ClCompile Include="Game\Bullet.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Utility.cpp">
+      <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

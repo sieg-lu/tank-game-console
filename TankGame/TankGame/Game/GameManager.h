@@ -1,9 +1,13 @@
 #ifndef __GAME_MANAGER_H__
 #define __GAME_MANAGER_H__
 
-#include "../Base/Global.h"
 #include "../Base/Object.h"
+#include "../Base/Global.h"
+
 #include "Player.h"
+#include "Enemy.h"
+#include "Bullet.h"
+
 
 class GameManager {
 private:
@@ -19,10 +23,12 @@ private:
     int mHeight;
     int mWidth;
     vector<string> mBuffer;
-    vector<Object*> mObjects;
+    list<Object*> mObjects;
+    list<Bullet*> mBulletsList;
+    bool mIsGameOver;
+    int mRoundCount;
 
     Player *mPlayer;
-    bool mIsKeyPressed[256];
 
     bool ProcessKey(char key);
 

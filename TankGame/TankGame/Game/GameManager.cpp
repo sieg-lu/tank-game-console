@@ -5,13 +5,13 @@
 #include <pthread.h>
 
 #include "Terrain.h"
-#include "../Base/ConsoleAPI.h"
 #include "GameManager.h"
 
 #define GAME_LOOP_DELAY 50
 #define INPUT_DELAY 200
 
-queue<char> gKeysQueue;
+// queue<char> gKeysQueue;
+char gKey;
 pthread_t gKeysThread;
 pthread_mutex_t gKeysMutex;
 
@@ -51,7 +51,10 @@ bool GameManager::Initialize(string filename)
         return false;
     }
     fin >> mWidth >> mHeight;
-
+    gKey = 0;
+    mIsGameOver = false;
+    mRoundCount = 0;
+//    srand((uint)time(NULL));
 //    mBuffer.resize(mHeight);
     string tmpStr;
     for (int i = 0; i < mHeight; i++) {
@@ -71,9 +74,6 @@ bool GameManager::Initialize(string filename)
         terrain.push_back(oneLine);
     }
 
-    int playerX, playerY;
-    fin >> playerX >> playerY;
-
     bool success = true;
     do {
         Object *tr = new Terrain();
@@ -83,16 +83,34 @@ bool GameManager::Initialize(string filename)
         }
         mObjects.push_back(tr);
 
+        int playerX, playerY;
+        fin >> playerX >> playerY;
+        uint arg1 = MixInt(playerX, playerY);
         Player *pl = new Player();
-        uint arg1 = (playerX & 0x0000ffff);
-        uint arg2 = ((playerY & 0x0000ffff) << 16);
-        arg1 |= arg2;
         if (!pl->Initialize((void*)(&arg1))) {
             success = false;
             break;
         }
         mPlayer = pl;
         mObjects.push_back((Object*)pl);
+
+        int N, enemyX, enemyY;
+        fin >> N;
+        bool flag = true;
+        while (N-- != 0) {
+            fin >> enemyX >> enemyY;
+            uint arg1 = MixInt(enemyX, enemyY);
+            Object *en = new Enemy();
+            if (!en->Initialize((void*)(&arg1))) {
+                flag = false;
+                break;
+            }
+            mObjects.push_back(en);
+        }
+        if (!flag) {
+            success = false;
+            break;
+        }
     } while (false);
 
     if (!success) {
@@ -109,13 +127,12 @@ void *KeyboardInput(void *arg)
         ch = getch();
 
         pthread_mutex_lock(&gKeysMutex);
-        gKeysQueue.push(ch);
-        pthread_mutex_unlock(&gKeysMutex);
-
+//        gKeysQueue.push(ch);
+        gKey = ch;
         if (ch == 27) {
             break;
         }
-
+        pthread_mutex_unlock(&gKeysMutex);
         Sleep(INPUT_DELAY);
     }
     pthread_exit((void*)0);
@@ -139,29 +156,89 @@ bool GameManager::StartGame()
         noecho();
         curs_set(FALSE);
 
-        bool bk = true;
-        pthread_mutex_lock(&gKeysMutex);
-        while (!gKeysQueue.empty()) {
-            bk = ProcessKey(gKeysQueue.front());
-            gKeysQueue.pop();
-            if (!bk) {
-                break;
+        bool win = false;
+        if (!mIsGameOver) {
+            for (list<Bullet*>::iterator it1 = mBulletsList.begin(); it1 != mBulletsList.end(); it1++) {
+                for (list<Object*>::iterator it2 = mObjects.begin(); it2 != mObjects.end(); it2++) {
+                    (*it1)->Collide(*it2);
+                }
             }
-        }
-        while (!gKeysQueue.empty()) {
-            gKeysQueue.pop();
-        }
-        pthread_mutex_unlock(&gKeysMutex);
+            int enemyCount = 0;
+            for (list<Object*>::iterator it = mObjects.begin(); it != mObjects.end(); ) {
+                if ((*it)->ThisType() == Object::eEnemy) {
+                    Enemy *ene = (Enemy*)(*it);
+                    ene->ai(mRoundCount, mPlayer, mBulletsList, mBuffer);
+                    enemyCount++;
+                }
+                if (!(*it)->Update(&mBuffer)) {
+//                      list<Object*>::iterator tmpIt = it++;
+                    if ((*it) == mPlayer) {
+                        mIsGameOver = true;
+                    }
+                    (*it)->Destroy();
+                    delete (*it);
+                    mObjects.erase(it++);
+                } else {
+                    it++;
+                }
+            }
+            if (enemyCount == 0) {
+                win = true;
+            }
+            for (list<Bullet*>::iterator it = mBulletsList.begin(); it != mBulletsList.end(); ) {
+                if (!(*it)->Update(&mBuffer)) {
+//                      list<Bullet*>::iterator tmpIt = it++;
+                    (*it)->Destroy();
+                    delete (*it);
+                    mBulletsList.erase(it++);
+                } else {
+                    it++;
+                }
+            }
+//            bool bk = true;
+            pthread_mutex_lock(&gKeysMutex);
+            if (gKey != 0) {
+                ProcessKey(gKey);
+                gKey = 0;
+            }
+//             while (!gKeysQueue.empty()) {
+//                 bk = ProcessKey(gKeysQueue.front());
+//                 gKeysQueue.pop();
+//                 if (!bk) {
+//                     break;
+//                 }
+//             }
+//             while (!gKeysQueue.empty()) {
+//                 gKeysQueue.pop();
+//             }
+            pthread_mutex_unlock(&gKeysMutex);
 
-        for (uint i = 0; i < mObjects.size(); i++) {
-            mObjects[i]->Render(&mBuffer);
+        }
+        for (list<Object*>::iterator it = mObjects.begin(); it != mObjects.end(); it++) {
+            (*it)->Render(&mBuffer);
+        }
+        for (list<Bullet*>::iterator it = mBulletsList.begin(); it != mBulletsList.end(); it++) {
+            (*it)->Render(&mBuffer);
         }
 
         clear();
         for (int i = 0; i < mHeight; i++) {
             mvprintw(i, 0, mBuffer[i].c_str());
         }
+        mvprintw(mHeight, 0, "Please Don't Hold the Key, Please! *>_<*");
+
+        if (win) {
+            mvprintw(2, 2, "You Win!!");
+        }
+        if (mIsGameOver) {
+            mvprintw(2, 2, "Game Over...");
+        }
+
         refresh();
+        mRoundCount++;
+        if (mRoundCount >= 10000) {
+            mRoundCount = 0;
+        }
         Sleep(GAME_LOOP_DELAY);
     }
     pthread_join(gKeysThread, &status);
@@ -173,10 +250,6 @@ bool GameManager::StartGame()
 
 bool GameManager::ProcessKey(char key)
 {
-    if (mIsKeyPressed[key]) {
-        return false;
-    }
-    mIsKeyPressed[key] = true;
     switch (key)
     {
     case 'w': 
@@ -195,6 +268,10 @@ bool GameManager::ProcessKey(char key)
         {
             mPlayer->Move(eRight, mBuffer);
         } break;
+    case ' ':
+        {
+            mPlayer->Shoot(mBulletsList, mBuffer);
+        } break;
     case 27: 
         {
             exit(0);
@@ -206,10 +283,10 @@ bool GameManager::ProcessKey(char key)
 
 bool GameManager::Destroy()
 {
-    for (uint i = 0; i < mObjects.size(); i++) {
-        if (mObjects[i] != NULL) {
-            mObjects[i]->Destroy();
-            delete mObjects[i];
+    for (list<Object*>::iterator it = mObjects.begin(); it != mObjects.end(); it++) {
+        if ((*it) != NULL) {
+            (*it)->Destroy();
+            delete (*it);
         }
     }
     mObjects.clear();
