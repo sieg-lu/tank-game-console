@@ -19,4 +19,11 @@ enum eDirection {
 };
 extern const int gTankArea[4][4][3];
 
+/*
+ * #: Wall
+ * *: Breakable Wall
+ * ^/X: Tank's Head
+ * O: Bullet
+ */
+
 #endif ///> end of __GLOBAL_H__

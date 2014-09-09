@@ -82,8 +82,11 @@
     <ClInclude Include="Base\ConsoleAPI.h" />
     <ClInclude Include="Base\Global.h" />
     <ClInclude Include="Base\Object.h" />
+    <ClInclude Include="Game\Bullet.h" />
+    <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\GameManager.h" />
     <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Game\Tank.h" />
     <ClInclude Include="Game\Terrain.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -92,8 +95,11 @@
     <ClCompile Include="Base\ConsoleAPI.cpp" />
     <ClCompile Include="Base\Global.cpp" />
     <ClCompile Include="Base\Object.cpp" />
+    <ClCompile Include="Game\Bullet.cpp" />
+    <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\GameManager.cpp" />
     <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="Game\Tank.cpp" />
     <ClCompile Include="Game\Terrain.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

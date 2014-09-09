@@ -2,19 +2,11 @@
 #define __PLAYER_H__
 
 #include "../Base/Global.h"
+#include "Tank.h"
 
-class Player : public Object {
+class Player : public Tank {
 public:
-    // arg => INT, x-pos = LOWER(arg), y-pos = UPPER(arg)
-    virtual bool Initialize(void *arg);
-    virtual bool Update();
     virtual bool Render(void *arg);
-    virtual bool Destroy();
-
-private:
-    eDirection mDirection;
-    uint mPosX;
-    uint mPosY;
 
 };
 

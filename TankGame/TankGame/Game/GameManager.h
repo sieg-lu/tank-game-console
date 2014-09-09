@@ -22,8 +22,9 @@ private:
     vector<Object*> mObjects;
 
     Player *mPlayer;
+    bool mIsKeyPressed[256];
 
-    bool ProcessKey(int key);
+    bool ProcessKey(char key);
 
 public:
     bool Initialize(string filename);

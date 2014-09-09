@@ -148,10 +148,10 @@ bool GameManager::StartGame()
                 break;
             }
         }
-        pthread_mutex_unlock(&gKeysMutex);
-        if (!bk) {
-            break;
+        while (!gKeysQueue.empty()) {
+            gKeysQueue.pop();
         }
+        pthread_mutex_unlock(&gKeysMutex);
 
         for (uint i = 0; i < mObjects.size(); i++) {
             mObjects[i]->Render(&mBuffer);
@@ -171,15 +171,33 @@ bool GameManager::StartGame()
     return true;
 }
 
-bool GameManager::ProcessKey(int key)
+bool GameManager::ProcessKey(char key)
 {
+    if (mIsKeyPressed[key]) {
+        return false;
+    }
+    mIsKeyPressed[key] = true;
     switch (key)
     {
-    case 'a': {
-//            mBuffer[20][20] = 'X';
+    case 'w': 
+        {
+            mPlayer->Move(eUp, mBuffer);
         } break;
-    case 27: {
-            return false;
+    case 'a':
+        {
+            mPlayer->Move(eLeft, mBuffer);
+        } break;
+    case 's':
+        {
+            mPlayer->Move(eDown, mBuffer);
+        } break;
+    case 'd':
+        {
+            mPlayer->Move(eRight, mBuffer);
+        } break;
+    case 27: 
+        {
+            exit(0);
         } break;
     }
 
