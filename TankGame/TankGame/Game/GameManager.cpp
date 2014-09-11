@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <fstream>
 #include <queue>
+#include <ctime>
 #include <curses.h>
 #include <pthread.h>
 
@@ -54,6 +55,7 @@ bool GameManager::Initialize(string filename)
     gKey = 0;
     mIsGameOver = false;
     mRoundCount = 0;
+    srand((uint)time(NULL));
 //    srand((uint)time(NULL));
 //    mBuffer.resize(mHeight);
     string tmpStr;
